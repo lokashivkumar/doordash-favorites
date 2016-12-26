@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:scrollbars="vertical"
+    android:scrollbarFadeDuration="50">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/favorite_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        android:layout_margin="1dp"
+        android:clickable="true"
+        android:longClickable="true"
+        android:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/favorite_coverImage"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:foregroundGravity="center"
+                android:scaleType="fitCenter"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/favorite_restaurant_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/favorite_coverImage"
+                android:layout_alignParentTop="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAlignment="viewStart"
+                android:gravity="start"
+                android:maxLength="30" />
+
+            <TextView
+                android:id="@+id/favorite_cuisine_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/favorite_coverImage"
+                android:layout_below="@id/favorite_restaurant_name"
+                android:textSize="12sp"
+                android:textAlignment="viewStart"
+                android:gravity="start"
+                android:maxLines="1" />
+
+            <TextView
+                android:id="@+id/favorite_deliveryFee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/favorite_coverImage"
+                android:layout_below="@id/favorite_cuisine_type"
+                android:textSize="16sp"
+                android:textAlignment="viewStart"
+                android:gravity="start"/>
+
+            <TextView
+                android:id="@+id/favorite_deliveryTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/favorite_coverImage"
+                android:layout_below="@id/favorite_deliveryFee"
+                android:textSize="16sp"
+                android:textAlignment="viewStart"
+                android:gravity="start"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
