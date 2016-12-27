@@ -15,6 +15,7 @@ import com.shivloka.doordashfavorites.model.Restaurant;
 import com.shivloka.doordashfavorites.util.FavoritesDbHelper;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -113,5 +114,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     @Override
     public int getItemCount() {
         return restaurants.size();
+    }
+
+    private void filter(ArrayList<Restaurant> filteredList) {
+        restaurants.addAll(filteredList);
+        notifyDataSetChanged();
     }
 }

@@ -2,10 +2,13 @@ package com.shivloka.doordashfavorites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,13 +35,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class RestaurantSearchActivity extends AppCompatActivity {
+public class RestaurantSearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     @BindView(R.id.restaurants_recycle_view)
     RecyclerView restaurantRecyclerView;
 
     private static final String TAG = RestaurantSearchActivity.class.getSimpleName();
 
+    private List<Restaurant> unfilteredRestaurants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,11 @@ public class RestaurantSearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.favorites_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint("Search");
+        searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -100,6 +109,24 @@ public class RestaurantSearchActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        String lowercaseQuery = query.toLowerCase();
+        List<Restaurant> filteredList = new ArrayList<>();
+        for (Restaurant restaurant : unfilteredRestaurants) {
+            if (restaurant.getName().toLowerCase().contains(lowercaseQuery)) {
+                filteredList.add(restaurant);
+            }
+        }
+
+        return true;
     }
 
 
@@ -190,6 +217,7 @@ public class RestaurantSearchActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        unfilteredRestaurants = restaurants;
         return restaurants;
     }
 }
