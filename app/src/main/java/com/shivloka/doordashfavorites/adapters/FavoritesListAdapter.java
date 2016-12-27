@@ -68,7 +68,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         final Restaurant restaurant = favorites.get(position);
         holder.favoritesName.setText(restaurant.getName());
         holder.favoriteCuisineType.setText(restaurant.getCuisineType());
-        holder.favoriteDeliveryFee.setText("$" + String.valueOf(restaurant.getDeliveryFee()));
+        String deliveryFee = "$" + restaurant.getDeliveryFee();
+        holder.favoriteDeliveryFee.setText(deliveryFee);
         holder.favoriteDeliveryTime.setText(restaurant.getDeliveryTime());
         Picasso.with(favoritesContext).load(restaurant.getCoverImageUrl()).into(holder.favoritesCoverImage);
     }

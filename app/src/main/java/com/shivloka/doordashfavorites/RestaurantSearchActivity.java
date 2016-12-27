@@ -2,7 +2,6 @@ package com.shivloka.doordashfavorites;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;

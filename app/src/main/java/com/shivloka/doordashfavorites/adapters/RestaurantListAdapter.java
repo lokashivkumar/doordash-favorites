@@ -75,7 +75,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         final Restaurant restaurant = restaurants.get(position);
         holder.restaurantName.setText(restaurant.getName());
         holder.cuisineType.setText(restaurant.getCuisineType());
-        holder.deliveryFee.setText("$"+String.valueOf(restaurant.getDeliveryFee()));
+        String deliveryFee = "$" + restaurant.getDeliveryFee();
+        holder.deliveryFee.setText(deliveryFee);
         holder.deliveryTime.setText(restaurant.getDeliveryTime());
 
         Picasso.with(restaurantsContext).load(restaurant.getCoverImageUrl()).into(holder.coverImage);

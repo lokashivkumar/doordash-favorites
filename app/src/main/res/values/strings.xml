@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">DD-Favorites</string>
     <string name="coverimage_string">coverImage</string>
+    <string name="favoriteButton">Favorite Button</string>
+    <string name="search">Search</string>
+    <string name="favorite">Favorite</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signIn">Sign In</string>
 </resources>

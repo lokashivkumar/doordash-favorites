@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="139dp"
         android:id="@+id/email"
-        android:hint="Email" />
+        android:hint="@string/email" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -27,10 +27,10 @@
         android:layout_alignStart="@+id/email"
         android:layout_marginTop="23dp"
         android:id="@+id/password"
-        android:hint="Password" />
+        android:hint="@string/password" />
 
     <Button
-        android:text="Sign In"
+        android:text="@string/signIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/password"
