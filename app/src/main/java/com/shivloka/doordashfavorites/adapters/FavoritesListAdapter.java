@@ -1,5 +1,6 @@
 package com.shivloka.doordashfavorites.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shivloka.doordashfavorites.R;
 import com.shivloka.doordashfavorites.model.Restaurant;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -23,7 +24,9 @@ import butterknife.ButterKnife;
 
 public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdapter.FavoritesListViewHolder> {
 
-    private List<Restaurant> favorites;
+    private static final String TAG = FavoritesListViewHolder.class.getSimpleName() + "::: ";
+    private final List<Restaurant> favorites;
+    private Context favoritesContext;
 
     public FavoritesListAdapter(List<Restaurant> favorites) {
         this.favorites = favorites;
@@ -47,6 +50,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         FavoritesListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            favoritesContext = itemView.getContext();
         }
     }
 
@@ -60,11 +64,13 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
 
     @Override
     public void onBindViewHolder(FavoritesListViewHolder holder, int position) {
+
         final Restaurant restaurant = favorites.get(position);
         holder.favoritesName.setText(restaurant.getName());
         holder.favoriteCuisineType.setText(restaurant.getCuisineType());
-        holder.favoriteDeliveryFee.setText(String.valueOf(restaurant.getDeliveryFee()));
+        holder.favoriteDeliveryFee.setText("$" + String.valueOf(restaurant.getDeliveryFee()));
         holder.favoriteDeliveryTime.setText(restaurant.getDeliveryTime());
+        Picasso.with(favoritesContext).load(restaurant.getCoverImageUrl()).into(holder.favoritesCoverImage);
     }
 
     @Override

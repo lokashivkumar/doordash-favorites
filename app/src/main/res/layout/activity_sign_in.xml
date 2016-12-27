@@ -15,7 +15,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="139dp"
         android:id="@+id/email"
-        android:text="loka.shivkumar1988@gmail.com"
         android:hint="Email" />
 
     <EditText
@@ -28,7 +27,6 @@
         android:layout_alignStart="@+id/email"
         android:layout_marginTop="23dp"
         android:id="@+id/password"
-        android:text="Zoo.ear.far-801"
         android:hint="Password" />
 
     <Button

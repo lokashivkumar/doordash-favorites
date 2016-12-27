@@ -1,15 +1,13 @@
 package com.shivloka.doordashfavorites;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.shivloka.doordashfavorites.adapters.FavoritesListAdapter;
-import com.shivloka.doordashfavorites.adapters.RestaurantListAdapter;
 import com.shivloka.doordashfavorites.model.Restaurant;
 import com.shivloka.doordashfavorites.util.FavoritesDbHelper;
 
@@ -50,7 +48,6 @@ public class FavoritesActivity extends AppCompatActivity {
 
     private List<Restaurant> showFavorites() {
         FavoritesDbHelper favoritesDbHelper = new FavoritesDbHelper(this);
-        List<Restaurant> favorites = favoritesDbHelper.getFavorites();
-        return favorites;
+        return favoritesDbHelper.getFavorites();
     }
 }

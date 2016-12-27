@@ -1,14 +1,11 @@
 package com.shivloka.doordashfavorites;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +19,6 @@ import com.shivloka.doordashfavorites.model.User;
 import com.shivloka.doordashfavorites.util.FavoritesDbHelper;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +31,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
 public class RestaurantSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.restaurants_recycle_view)
@@ -42,13 +39,6 @@ public class RestaurantSearchActivity extends AppCompatActivity {
 
     private static final String TAG = RestaurantSearchActivity.class.getSimpleName();
 
-    private List<Restaurant> restaurants = new ArrayList<>();
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getFavorites();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +47,6 @@ public class RestaurantSearchActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Toolbar favoritesToolbar = (Toolbar) findViewById(R.id.favorites_toolbar);
         restaurantRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         restaurantRecyclerView.setLayoutManager(layoutManager);
@@ -126,7 +115,7 @@ public class RestaurantSearchActivity extends AppCompatActivity {
             Log.i(TAG, String.valueOf(response.code()));
             if (response.isSuccessful()) {
                 String responseString = response.body().string();
-                parseRestaurantData(responseString, getFavorites());
+                final List<Restaurant> restaurants = parseRestaurantData(responseString);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -139,11 +128,6 @@ public class RestaurantSearchActivity extends AppCompatActivity {
                 });
             }
         }
-    }
-
-    private List<Restaurant> getFavorites() {
-        FavoritesDbHelper favoritesDbHelper = new FavoritesDbHelper(getApplicationContext());
-        return (List<Restaurant>) favoritesDbHelper.getFavorites();
     }
 
     private Request constructRestaurantListRequest(double lat, double lng) {
@@ -182,17 +166,30 @@ public class RestaurantSearchActivity extends AppCompatActivity {
         return user;
     }
 
-    private void parseRestaurantData(String responseString, List<Restaurant> favorites) {
+    private List<Restaurant> parseRestaurantData(String responseString) {
+        List<Restaurant> restaurants = new ArrayList<>();
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(JsonGenerator.Feature.AUTO_CLOSE_JSON_CONTENT, true);
             restaurants = objectMapper.readValue(responseString, objectMapper.getTypeFactory().constructCollectionType(
                     List.class, Restaurant.class));
-            for (Restaurant restaurant : favorites) {
-                restaurant.setUserFavorite(true);
+            FavoritesDbHelper favoritesDbHelper = new FavoritesDbHelper(getApplicationContext());
+            List<Restaurant> favorites = favoritesDbHelper.getFavorites();
+            List<String> favoriteNames = new ArrayList<>();
+            for (Restaurant fav : favorites) {
+                favoriteNames.add(fav.getName());
             }
+
+            for (int i = 0; i < restaurants.size(); i++) {
+                Restaurant restaurant = restaurants.get(i);
+                if (favoriteNames.contains(restaurant.getName())) {
+                    restaurant.setUserFavorite(true);
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return restaurants;
     }
 }

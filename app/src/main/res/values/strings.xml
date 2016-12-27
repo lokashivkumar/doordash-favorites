@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">DoordashFavorites</string>
+    <string name="app_name">DD-Favorites</string>
+    <string name="coverimage_string">coverImage</string>
 </resources>

@@ -1,8 +1,5 @@
 package com.shivloka.doordashfavorites.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     //TODO: Write functional tests.
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Restaurant implements Parcelable {
+public class Restaurant {
 
     private int id;
     private String name;
@@ -30,28 +27,6 @@ public class Restaurant implements Parcelable {
     private boolean isUserFavorite;
 
     public Restaurant() {}
-
-    protected Restaurant(Parcel in) {
-        id = in.readInt();
-        name = in.readString();
-        coverImageUrl = in.readString();
-        deliveryFee = in.readDouble();
-        cuisineType = in.readString();
-        deliveryTime = in.readString();
-        isUserFavorite = in.readByte() != 0;
-    }
-
-    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
-        @Override
-        public Restaurant createFromParcel(Parcel in) {
-            return new Restaurant(in);
-        }
-
-        @Override
-        public Restaurant[] newArray(int size) {
-            return new Restaurant[size];
-        }
-    };
 
     public boolean isUserFavorite() {
         return isUserFavorite;
@@ -112,26 +87,12 @@ public class Restaurant implements Parcelable {
     @Override
     public String toString() {
         return "Restaurant: {" +
-                "deliveryTime='" + deliveryTime + '\'' +
-                ", deliveryFee=" + deliveryFee +
-                ", coverImageUrl='" + coverImageUrl + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeString(coverImageUrl);
-        dest.writeDouble(deliveryFee);
-        dest.writeString(cuisineType);
-        dest.writeString(deliveryTime);
-        dest.writeByte((byte) (isUserFavorite ? 1 : 0));
+                "cuisineType= " +cuisineType +
+                "deliveryTime= " +deliveryTime +
+                ", deliveryFee= " +deliveryFee +
+                ", coverImageUrl= " +coverImageUrl +
+                ", name=" +name +
+                ", isUserFavorite='" +isUserFavorite +
+                "}";
     }
 }

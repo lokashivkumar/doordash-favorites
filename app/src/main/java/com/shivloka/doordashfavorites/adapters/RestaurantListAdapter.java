@@ -33,7 +33,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     private List<Restaurant> favorites;
     private Context restaurantsContext;
 
-
     class RestaurantsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.coverImage)
         ImageView coverImage;
@@ -65,7 +64,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public RestaurantsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.restaurant_list_layout, parent, false);
-
         return new RestaurantsViewHolder(itemView);
     }
 
@@ -74,7 +72,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         final Restaurant restaurant = restaurants.get(position);
         holder.restaurantName.setText(restaurant.getName());
         holder.cuisineType.setText(restaurant.getCuisineType());
-        holder.deliveryFee.setText(String.valueOf(restaurant.getDeliveryFee()));
+        holder.deliveryFee.setText("$"+String.valueOf(restaurant.getDeliveryFee()));
         holder.deliveryTime.setText(restaurant.getDeliveryTime());
 
         Picasso.with(restaurantsContext).load(restaurant.getCoverImageUrl()).into(holder.coverImage);

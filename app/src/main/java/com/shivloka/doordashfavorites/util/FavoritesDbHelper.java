@@ -17,10 +17,7 @@ import java.util.List;
 
 public class FavoritesDbHelper extends SQLiteOpenHelper {
 
-    //TODO: Write tests for get and set.
-    //TODO: Clean up.
-
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Favorites.db";
 
     private static final String TABLE_FAVORITES = "favorites";
@@ -29,6 +26,8 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
     private static final String RESTAURANT_DELIVERY_TIME = "deliverytime";
     private static final String RESTAURANT_DELIVERY_FEE = "deliveryfee";
     private static final String CUISINE_TYPE = "cuisinetype";
+    private static final String RESTAURANT_COVER_IMAGE = "coverImage";
+    private static final String TAG = FavoritesDbHelper.class.getSimpleName();
 
     public FavoritesDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,13 +37,15 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_FAVORITES_TABLE = "CREATE TABLE " + TABLE_FAVORITES + "(" +
-                RESTAURANT_ID + " INTEGER PRIMARY KEY, " +
-                RESTAURANT_NAME + " TEXT, " +
-                CUISINE_TYPE + " TEXT, " +
-                RESTAURANT_DELIVERY_TIME + " TEXT, " +
-                RESTAURANT_DELIVERY_FEE + " REAL )";
+                RESTAURANT_ID + " INT PRIMARY KEY NOT NULL, " +
+                RESTAURANT_NAME + " VARCHAR(255), " +
+                CUISINE_TYPE + " VARCHAR(255), " +
+                RESTAURANT_DELIVERY_TIME + " VARCHAR(255), " +
+                RESTAURANT_COVER_IMAGE + " VARCHAR(255), " +
+                RESTAURANT_DELIVERY_FEE + " DOUBLE )";
         db.execSQL(CREATE_FAVORITES_TABLE);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -60,6 +61,7 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
         values.put(CUISINE_TYPE, restaurant.getCuisineType());
         values.put(RESTAURANT_DELIVERY_TIME, restaurant.getDeliveryTime());
         values.put(RESTAURANT_DELIVERY_FEE, restaurant.getDeliveryFee());
+        values.put(RESTAURANT_COVER_IMAGE, restaurant.getCoverImageUrl());
         db.insert(TABLE_FAVORITES, null, values);
         db.close();
     }
@@ -71,8 +73,8 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
         db.execSQL(deleteQuery);
     }
 
-    public List getFavorites() {
-        List restaurants = new ArrayList();
+    public List<Restaurant> getFavorites() {
+        List<Restaurant> restaurants = new ArrayList<>();
 
         // select restaurant query
         String query = "SELECT  * FROM " + TABLE_FAVORITES;
@@ -90,7 +92,8 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
                 restaurant.setName(cursor.getString(1));
                 restaurant.setCuisineType(cursor.getString(2));
                 restaurant.setDeliveryTime(cursor.getString(3));
-                restaurant.setDeliveryFee(cursor.getDouble(4));
+                restaurant.setCoverImageUrl(cursor.getString(4));
+                restaurant.setDeliveryFee(Double.parseDouble(cursor.getString(5)));
                 restaurants.add(restaurant);
             } while (cursor.moveToNext());
         }
