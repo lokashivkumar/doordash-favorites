@@ -3,6 +3,7 @@ package com.shivloka.doordashfavorites.adapters;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     //TODO: Get CoverImage from url
     private List<Restaurant> restaurants;
-    private List<Restaurant> favorites;
     private Context restaurantsContext;
 
     class RestaurantsViewHolder extends RecyclerView.ViewHolder {
@@ -56,6 +56,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             restaurantsContext = view.getContext();
         }
     }
+
+    public RestaurantListAdapter() {}
 
     public RestaurantListAdapter(List<Restaurant> restaurants) {
         this.restaurants = restaurants;
@@ -116,8 +118,11 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         return restaurants.size();
     }
 
-    private void filter(ArrayList<Restaurant> filteredList) {
+    public void setFilter(ArrayList<Restaurant> filteredList) {
+        for (Restaurant restaurant : filteredList) {
+            Log.i(TAG, restaurant.getName());
+        }
+        restaurants = new ArrayList<>();
         restaurants.addAll(filteredList);
-        notifyDataSetChanged();
     }
 }

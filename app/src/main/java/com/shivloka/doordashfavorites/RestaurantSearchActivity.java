@@ -121,11 +121,14 @@ public class RestaurantSearchActivity extends AppCompatActivity implements Searc
         String lowercaseQuery = query.toLowerCase();
         List<Restaurant> filteredList = new ArrayList<>();
         for (Restaurant restaurant : unfilteredRestaurants) {
-            if (restaurant.getName().toLowerCase().contains(lowercaseQuery)) {
+            String restaurantName = restaurant.getName().toLowerCase();
+            if (restaurantName.contains(lowercaseQuery)) {
                 filteredList.add(restaurant);
             }
         }
-
+        RestaurantListAdapter restaurantListAdapter = new RestaurantListAdapter();
+        restaurantListAdapter.setFilter((ArrayList) filteredList);
+        restaurantListAdapter.notifyDataSetChanged();
         return true;
     }
 
